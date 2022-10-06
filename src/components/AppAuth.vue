@@ -91,7 +91,12 @@
             </button>
           </form>
           <!-- Registration Form -->
-          <vee-form v-show="tab === 'register'" :validation-schema="schema">
+          <vee-form
+            v-show="tab === 'register'"
+            :validation-schema="schema"
+            @submit="register"
+            :initial-values="userData"
+          >
             <!-- Name -->
             <div class="mb-3">
               <label class="inline-block mb-2">Name</label>
@@ -129,11 +134,19 @@
               <label class="inline-block mb-2">Password</label>
               <vee-filed
                 name="password"
-                type="password"
-                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Password"
-              />
-              <ErrorMessage class="text-red-600" name="password" />
+                :bails="false"
+                v-slot="{ field, errors }"
+              >
+                <input
+                  class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+                  type="password"
+                  placeholder="Password"
+                  v-bind="field"
+                />
+                <div class="text-red-600" v-for="(error, i) in errors" :key="i">
+                  {{ error }}
+                </div>
+              </vee-filed>
             </div>
             <!-- Confirm Password -->
             <div class="mb-3">
@@ -198,14 +211,20 @@ export default {
         name: { required: true, min: 4, max: 10, alpha_spaces: true },
         email: { required: true, min: 3, max: 100, email: true },
         age: { required: true, min_value: 12, max_value: 100 },
-        password: { required: true, min: 8, max: 100 },
-        confirm_password: { confirmed: "@password" },
-        country: { required: true, exculded: "USA"},
-        tos: { required: true },
+        password: { required: true, min: 8, max: 100, exculded: "password" },
+        confirm_password: { passwords_mismatch: "@password" },
+        country: { required: true, country_exculded: "USA" },
+        tos: { tos: true },
+      },
+      userData: {
+        country: "Palestine",
       },
     };
   },
   methods: {
+    register(values) {
+      console.log(values);
+    },
     closeAuthModel() {
       this.modelVisibility = false;
     },

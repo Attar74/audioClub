@@ -64,134 +64,10 @@
           </ul>
 
           <!-- Login Form -->
-          <form v-show="tab === 'login'">
-            <!-- Email -->
-            <div class="mb-3">
-              <label class="inline-block mb-2">Email</label>
-              <input
-                type="email"
-                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Enter Email"
-              />
-            </div>
-            <!-- Password -->
-            <div class="mb-3">
-              <label class="inline-block mb-2">Password</label>
-              <input
-                type="password"
-                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Password"
-              />
-            </div>
-            <button
-              type="submit"
-              class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
-            >
-              Submit
-            </button>
-          </form>
+          <app-login-form v-if="tab === 'login'" />
+
           <!-- Registration Form -->
-          <vee-form
-            v-show="tab === 'register'"
-            :validation-schema="schema"
-            @submit="register"
-            :initial-values="userData"
-          >
-            <!-- Name -->
-            <div class="mb-3">
-              <label class="inline-block mb-2">Name</label>
-              <vee-filed
-                name="name"
-                type="text"
-                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Enter Name"
-              />
-              <ErrorMessage class="text-red-600" name="name" />
-            </div>
-            <!-- Email -->
-            <div class="mb-3">
-              <label class="inline-block mb-2">Email</label>
-              <vee-filed
-                name="email"
-                type="email"
-                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Enter Email"
-              />
-              <ErrorMessage class="text-red-600" name="email" />
-            </div>
-            <!-- Age -->
-            <div class="mb-3">
-              <label class="inline-block mb-2">Age</label>
-              <vee-filed
-                name="age"
-                type="number"
-                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-              />
-              <ErrorMessage class="text-red-600" name="age" />
-            </div>
-            <!-- Password -->
-            <div class="mb-3">
-              <label class="inline-block mb-2">Password</label>
-              <vee-filed
-                name="password"
-                :bails="false"
-                v-slot="{ field, errors }"
-              >
-                <input
-                  class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                  type="password"
-                  placeholder="Password"
-                  v-bind="field"
-                />
-                <div class="text-red-600" v-for="(error, i) in errors" :key="i">
-                  {{ error }}
-                </div>
-              </vee-filed>
-            </div>
-            <!-- Confirm Password -->
-            <div class="mb-3">
-              <label class="inline-block mb-2">Confirm Password</label>
-              <vee-filed
-                name="confirm_password"
-                type="password"
-                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-                placeholder="Confirm Password"
-              />
-              <ErrorMessage class="text-red-600" name="confirm_password" />
-            </div>
-            <!-- Country -->
-            <div class="mb-3">
-              <label class="inline-block mb-2">Country</label>
-              <vee-filed
-                name="country"
-                as="select"
-                class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-              >
-                <option value="Palestine">Palestine</option>
-                <option value="Egypt">Egypt</option>
-                <option value="Syria">Syria</option>
-                <option value="USA">USA</option>
-              </vee-filed>
-              <ErrorMessage class="text-red-600" name="country" />
-            </div>
-            <!-- TOS -->
-            <div class="mb-3 pl-6">
-              <vee-filed
-                name="tos"
-                type="checkbox"
-                value="1"
-                class="block w-4 h-4 float-left -ml-6 mt-1 rounded"
-              />
-              <label class="inline-block">Accept terms of service</label>
-              <ErrorMessage class="text-red-600 block" name="tos" />
-            </div>
-            <button
-              type="submit"
-              class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
-            >
-              Submit
-            </button>
-          </vee-form>
+          <app-register-form v-else />
         </div>
       </div>
     </div>
@@ -201,30 +77,18 @@
 <script>
 import { mapState, mapWritableState } from "pinia";
 import useModalStore from "@/stores/modal";
+import AppLoginForm from "@/components/LoginForm.vue";
+import AppRegisterForm from "@/components/RegisterForm.vue";
 
 export default {
   name: "AppAuth",
+  components: { AppLoginForm, AppRegisterForm },
   data() {
     return {
       tab: "login",
-      schema: {
-        name: { required: true, min: 4, max: 10, alpha_spaces: true },
-        email: { required: true, min: 3, max: 100, email: true },
-        age: { required: true, min_value: 12, max_value: 100 },
-        password: { required: true, min: 8, max: 100, exculded: "password" },
-        confirm_password: { passwords_mismatch: "@password" },
-        country: { required: true, country_exculded: "USA" },
-        tos: { tos: true },
-      },
-      userData: {
-        country: "Palestine",
-      },
     };
   },
   methods: {
-    register(values) {
-      console.log(values);
-    },
     closeAuthModel() {
       this.modelVisibility = false;
     },
@@ -240,5 +104,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

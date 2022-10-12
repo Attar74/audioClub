@@ -1,7 +1,7 @@
 <template>
   <!-- Login Form -->
   <div
-    class="text-whit text-center font-bold p-4 rounded mb-4"
+    class="text-white text-center font-bold p-4 rounded mb-4"
     v-if="login_show_alert"
     :class="login_alert_variant"
   >

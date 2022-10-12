@@ -1,7 +1,7 @@
 <template>
   <!-- Registration Form -->
   <div
-    class="text-whit text-center font-bold p-4 rounded mb-4"
+    class="text-white text-center font-bold p-4 rounded mb-4"
     v-if="reg_show_alert"
     :class="reg_alert_variant"
   >
@@ -70,6 +70,20 @@
       />
       <ErrorMessage class="text-red-600" name="confirm_password" />
     </div>
+    <!-- userType -->
+    <div class="mb-3">
+      <label class="inline-block mb-2">user Type</label>
+      <vee-filed
+        name="userType"
+        as="select"
+        class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+      >
+        <option value="Listener">listener</option>
+        <option value="Artist">artist</option>
+        <option value="Both">both</option>
+      </vee-filed>
+      <ErrorMessage class="text-red-600" name="userType" />
+    </div>
     <!-- Country -->
     <div class="mb-3">
       <label class="inline-block mb-2">Country</label>
@@ -107,6 +121,10 @@
 </template>
 
 <script>
+import { auth, usersClolection } from "@/includes/firebase";
+import { mapWritableState } from "pinia";
+import useUserStore from "@/stores/user";
+
 export default {
   name: "RegisterForm",
   data() {
@@ -117,11 +135,13 @@ export default {
         age: { required: true, min_value: 12, max_value: 100 },
         password: { required: true, min: 8, max: 100, exculded: "password" },
         confirm_password: { passwords_mismatch: "@password" },
+        userType: { required: true },
         country: { required: true, country_exculded: "USA" },
         tos: { tos: true },
       },
       initialUserData: {
         country: "Palestine",
+        userType: "Listener",
       },
       reg_in_submission: false,
       reg_show_alert: false,
@@ -129,16 +149,48 @@ export default {
       reg_alert_msg: "Please wait! Yout account is  being created.",
     };
   },
+  computed: {
+    ...mapWritableState(useUserStore, ["userLoggedIn"]),
+  },
   methods: {
-    register() {
+    async register(values) {
       this.reg_show_alert = true;
       this.reg_in_submission = true;
       this.reg_alert_variant = "bg-blue-500";
       this.reg_alert_msg = "Please wait! Yout account is  being created.";
-      setTimeout(() => {
-        this.reg_alert_variant = "bg-green-500";
-        this.reg_alert_msg = "Success! Your account has been created.";
-      }, 3000);
+      let userCred = null;
+      try {
+        userCred = await auth.createUserWithEmailAndPassword(
+          values.email,
+          values.password
+        );
+      } catch (error) {
+        this.reg_in_submission = false;
+        this.reg_alert_variant = "bg-red-500";
+        this.reg_alert_msg = "Error occured! Please try again later.";
+        return;
+      }
+
+      try {
+        await usersClolection.add({
+          email: values.email,
+          name: values.name,
+          age: values.age,
+          country: values.country,
+          userType: values.userType,
+        });
+      } catch (error) {
+        this.reg_in_submission = false;
+        this.reg_alert_variant = "bg-red-500";
+        this.reg_alert_msg = "Error occured! Please try again later.";
+        return;
+      }
+
+      this.userLoggedIn = true;
+
+      this.reg_alert_variant = "bg-green-500";
+      this.reg_alert_msg = "Success! Your account has been created.";
+      console.log(userCred);
     },
   },
 };

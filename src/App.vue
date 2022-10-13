@@ -275,6 +275,9 @@
 <script>
 import AppHeader from "@/components/AppHeader.vue";
 import AppAuth from "@/components/AppAuth.vue";
+import { mapWritableState } from "pinia";
+import userStore from "@/stores/user";
+import { auth } from "./includes/firebase";
 
 export default {
   name: "App",
@@ -284,10 +287,16 @@ export default {
       modelVisibility: "hidden",
     };
   },
+  computed: {
+    ...mapWritableState(userStore, ["userLoggedIn"]),
+  },
   methods: {
     openModel(modelVisibilityVal) {
       this.modelVisibility = modelVisibilityVal ? "" : "hidden";
     },
+  },
+  created() {
+    this.userLoggedIn = auth.currentUser ? true : false;
   },
 };
 </script>

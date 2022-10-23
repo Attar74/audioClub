@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/fireStore";
+import "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,7 +18,9 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 const usersClolection = db.collection("users");
+const audiosClolection = db.collection("audios");
 
-export { auth, db, usersClolection };
+export { auth, db, storage, usersClolection, audiosClolection };

@@ -19,6 +19,7 @@
       >
         <h5>Drop your files here</h5>
       </div>
+      <input type="file" multiple @change="upload($event)" />
       <hr class="my-6" />
       <!-- Progess Bars -->
       <div class="mb-4" v-for="upload in uploads" :key="upload.name">
@@ -30,7 +31,7 @@
         <div class="flex h-4 overflow-hidden bg-gray-200 rounded">
           <!-- Inner Progress Bar -->
           <div
-            class="transition-all progress-bar bg-blue-400"
+            class="transition-all progress-bar"
             :class="upload.variant"
             :style="{ width: `${upload.currentProgress}%` }"
           ></div>
@@ -41,10 +42,16 @@
 </template>
 
 <script>
-import { storage, auth, audiosClolection } from "@/includes/firebase";
+import { storage, auth, audiosCollection } from "@/includes/firebase";
 
 export default {
   name: "upload",
+  props: {
+    addAudio: {
+      type: Function,
+      required: true,
+    },
+  },
   data() {
     return {
       is_dragover: false,
@@ -53,7 +60,12 @@ export default {
   },
   methods: {
     upload($event) {
-      const files = [...$event.dataTransfer.files];
+      this.is_dragover = false;
+
+      const files = $event.dataTransfer
+        ? [...$event.dataTransfer.files]
+        : [$event.target.files];
+
       files.forEach((file) => {
         if (file.type !== "audio/mpeg") {
           return;
@@ -80,12 +92,14 @@ export default {
               this.uploads[uploadIndex].currentProgress = progress;
             },
             (error) => {
+              //catch
               this.uploads[uploadIndex].variant = "bg-red-400";
               this.uploads[uploadIndex].icon = "fas fa-times";
               this.uploads[uploadIndex].text_class = "text-red-400";
               console.log(error);
             },
             async () => {
+              //success
               const audio = {
                 uid: auth.currentUser.uid,
                 display_name: auth.currentUser.displayName,
@@ -95,8 +109,10 @@ export default {
                 comment_count: 0,
                 url: await task.snapshot.ref.getDownloadURL(),
               };
+              const audioRef = await audiosCollection.add(audio);
+              const audioSnapshot = await audioRef.get();
 
-              await audiosClolection.add(audio);
+              this.addAudio(audioSnapshot);
 
               this.uploads[uploadIndex].variant = "bg-green-400";
               this.uploads[uploadIndex].icon = "fas fa-check";
@@ -105,8 +121,15 @@ export default {
           );
         }
       });
-      this.is_dragover = false;
     },
+    cancelUploads() {
+      this.uploads.forEach((upload) => {
+        upload.task.cancel();
+      });
+    },
+  },
+  beforeUnmount() {
+    this.cancelUploads();
   },
 };
 </script>

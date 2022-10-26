@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { auth, usersClolection } from "@/includes/firebase";
+import { auth, usersCollection } from "@/includes/firebase";
 
 export default defineStore("user", {
   state: () => ({
@@ -12,7 +12,7 @@ export default defineStore("user", {
         values.password
       );
 
-      await usersClolection.doc(userCred.user.uid).set({
+      await usersCollection.doc(userCred.user.uid).set({
         email: values.email,
         name: values.name,
         age: values.age,

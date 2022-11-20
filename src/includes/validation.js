@@ -1,6 +1,6 @@
 import {
   Form as VeeForm,
-  Field as VeeFiled,
+  Field as VeeField,
   defineRule,
   ErrorMessage,
   configure,
@@ -19,7 +19,7 @@ import {
 export default {
   install(app) {
     app.component("VeeForm", VeeForm);
-    app.component("VeeFiled", VeeFiled);
+    app.component("VeeField", VeeField);
     app.component("ErrorMessage", ErrorMessage);
 
     defineRule("required", required);
@@ -42,6 +42,7 @@ export default {
           max: `The field ${ctx.field} is too long.`,
           alpha_spaces: `The field ${ctx.field} may only contain alphabetical characters and spaces.`,
           emial: `The field ${ctx.field} must be a valid email.`,
+          comment: `The field ${ctx.field} must be a valid comment.`,
           min_value: `The field ${ctx.field} is too low.`,
           max_value: `The field ${ctx.field} is too high.`,
           exculded: `You are not allowed to use this value fro the field ${ctx.field}.`,

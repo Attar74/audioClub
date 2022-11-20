@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Manage from "@/views/Manage.vue";
-import useUserStore from "@/stores/user";
+// import useUserStore from "@/stores/user";
+import Audio from "@/views/Audio.vue";
 
 const routes = [
   {
@@ -27,10 +28,14 @@ const routes = [
     //   console.log(to, from, next);
     // },
   },
-  // {
-  //   path: "/manage",
-  //   redirect: { name: "manage" },
-  // },
+  {
+    name: "audio",
+    path: "/audio/:id",
+    component: Audio,
+    meta: {
+      requiresAuth: true,
+    },
+  },
   {
     path: "/:catchAll(.*)*",
     redirect: { name: "home" },
@@ -44,12 +49,12 @@ const router = createRouter({
 });
 
 //Global Guard
-router.beforeEach((to, from, next) => {
-  if (!to.meta.requiresAuth) {
-    next();
-    return;
-  }
-  const store = useUserStore();
-  store.userLoggedIn ? next() : next({ name: "home" });
-});
+// router.beforeEach((to, from, next) => {
+//   if (!to.meta.requiresAuth) {
+//     next();
+//     return;
+//   }
+//   const store = useUserStore();
+//   store.userLoggedIn ? next() : next({ name: "home" });
+// });
 export default router;

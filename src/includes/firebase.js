@@ -22,5 +22,13 @@ const storage = firebase.storage();
 
 const usersCollection = db.collection("users");
 const audiosCollection = db.collection("audios");
+const commentsCollection = db.collection("comments");
 
-export { auth, db, storage, usersCollection, audiosCollection };
+export {
+  auth,
+  db,
+  storage,
+  usersCollection,
+  audiosCollection,
+  commentsCollection,
+};

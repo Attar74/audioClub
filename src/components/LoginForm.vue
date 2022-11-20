@@ -11,7 +11,7 @@
     <!-- Email -->
     <div class="mb-3">
       <label class="inline-block mb-2">Email</label>
-      <vee-filed
+      <vee-field
         name="email"
         type="email"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -22,7 +22,7 @@
     <!-- Password -->
     <div class="mb-3">
       <label class="inline-block mb-2">Password</label>
-      <vee-filed
+      <vee-field
         name="password"
         type="password"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -41,8 +41,9 @@
 </template>
 
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapStores } from "pinia";
 import userStore from "@/stores/user";
+import useModalStore from "@/stores/modal";
 
 export default {
   name: "loginForm",
@@ -58,10 +59,13 @@ export default {
       login_alert_msg: "Please wait! We are loggin you in.",
     };
   },
+  computed: {
+    ...mapStores(useModalStore),
+  },
   methods: {
     ...mapActions(userStore, ["authenticate"]),
 
-    async login(values) {
+    async login(values, { resetForm }) {
       this.login_show_alert = true;
       this.login_in_submission = true;
       this.login_alert_variant = "bg-blue-500";
@@ -78,7 +82,12 @@ export default {
       this.login_alert_variant = "bg-green-500";
       this.login_alert_msg = "Success! You are in.";
 
-      window.location.reload();
+      //window.location.reload();
+      setTimeout(() => {
+        this.modalStore.isOpen = !this.modalStore.isOpen;
+        resetForm();
+        this.login_show_alert = false;
+      }, 1000);
     },
   },
 };

@@ -15,7 +15,7 @@
     <!-- Name -->
     <div class="mb-3">
       <label class="inline-block mb-2">Name</label>
-      <vee-filed
+      <vee-field
         name="name"
         type="text"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -26,7 +26,7 @@
     <!-- Email -->
     <div class="mb-3">
       <label class="inline-block mb-2">Email</label>
-      <vee-filed
+      <vee-field
         name="email"
         type="email"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -37,7 +37,7 @@
     <!-- Age -->
     <div class="mb-3">
       <label class="inline-block mb-2">Age</label>
-      <vee-filed
+      <vee-field
         name="age"
         type="number"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -47,7 +47,7 @@
     <!-- Password -->
     <div class="mb-3">
       <label class="inline-block mb-2">Password</label>
-      <vee-filed name="password" :bails="false" v-slot="{ field, errors }">
+      <vee-field name="password" :bails="false" v-slot="{ field, errors }">
         <input
           class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
           type="password"
@@ -57,12 +57,12 @@
         <div class="text-red-600" v-for="(error, i) in errors" :key="i">
           {{ error }}
         </div>
-      </vee-filed>
+      </vee-field>
     </div>
     <!-- Confirm Password -->
     <div class="mb-3">
       <label class="inline-block mb-2">Confirm Password</label>
-      <vee-filed
+      <vee-field
         name="confirm_password"
         type="password"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -73,7 +73,7 @@
     <!-- userType -->
     <div class="mb-3">
       <label class="inline-block mb-2">user Type</label>
-      <vee-filed
+      <vee-field
         name="userType"
         as="select"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -81,13 +81,13 @@
         <option value="Listener">listener</option>
         <option value="Artist">artist</option>
         <option value="Both">both</option>
-      </vee-filed>
+      </vee-field>
       <ErrorMessage class="text-red-600" name="userType" />
     </div>
     <!-- Country -->
     <div class="mb-3">
       <label class="inline-block mb-2">Country</label>
-      <vee-filed
+      <vee-field
         name="country"
         as="select"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
@@ -96,12 +96,12 @@
         <option value="Egypt">Egypt</option>
         <option value="Syria">Syria</option>
         <option value="USA">USA</option>
-      </vee-filed>
+      </vee-field>
       <ErrorMessage class="text-red-600" name="country" />
     </div>
     <!-- TOS -->
     <div class="mb-3 pl-6">
-      <vee-filed
+      <vee-field
         name="tos"
         type="checkbox"
         value="1"
@@ -121,8 +121,9 @@
 </template>
 
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapStores } from "pinia";
 import useUserStore from "@/stores/user";
+import useModalStore from "@/stores/modal";
 
 export default {
   name: "RegisterForm",
@@ -148,9 +149,12 @@ export default {
       reg_alert_msg: "Please wait! Yout account is  being created.",
     };
   },
+  computed: {
+    ...mapStores(useModalStore),
+  },
   methods: {
     ...mapActions(useUserStore, { createUser: "register" }),
-    async register(values) {
+    async register(values, { resetForm }) {
       this.reg_show_alert = true;
       this.reg_in_submission = true;
       this.reg_alert_variant = "bg-blue-500";
@@ -167,7 +171,12 @@ export default {
       this.reg_alert_variant = "bg-green-500";
       this.reg_alert_msg = "Success! Your account has been created.";
 
-      window.location.reload();
+      //window.location.reload();
+      setTimeout(() => {
+        this.modalStore.isOpen = !this.modalStore.isOpen;
+        resetForm();
+        this.reg_show_alert = false;
+      }, 1000);
     },
   },
 };

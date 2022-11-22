@@ -1,4 +1,6 @@
-<template>About</template>
+<template>
+  <p>About</p>
+</template>
 
 <script>
 import useUserStore from "@/stores/user";

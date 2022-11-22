@@ -46,7 +46,7 @@ export default defineStore("player", {
       this.playerProgress = `${
         (this.sound.seek() / this.sound.duration()) * 100
       }%`;
-      if (this.sound.playing()) {
+      if (this.sound.playing) {
         requestAnimationFrame(this.progress);
       }
     },

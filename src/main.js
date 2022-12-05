@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import veeValidatePlugin from "./includes/validation";
 import { auth } from "./includes/firebase";
+import Icon from "./directives/icon";
 
 import "./assets/base.css";
 import "./assets/main.css";
@@ -23,6 +24,9 @@ auth.onAuthStateChanged(() => {
 
     //register vee-validate
     app.use(veeValidatePlugin);
+
+    //Directive
+    app.directive("Icon", Icon);
 
     app.mount("#app");
   }

@@ -29,12 +29,13 @@
       <div
         class="bg-white rounded border border-gray-200 relative flex flex-col"
       >
-        <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
+        <div
+          class="px-6 pt-6 pb-5 font-bold border-b border-gray-200"
+          v-icon-secondry="{ icon: 'headphones-alt', right: true }"
+        >
           <span class="card-title">Audios</span>
           <!-- Icon -->
-          <i
-            class="fa fa-headphones-alt float-right text-green-400 text-xl"
-          ></i>
+          <!-- I'm using a directive to show this icon-->
         </div>
         <!-- Playlist -->
         <ol id="playlist">
@@ -51,10 +52,13 @@
 <script>
 import { audiosCollection } from "@/includes/firebase";
 import AppAudioItem from "../components/audioItem.vue";
-
+import IconSecondary from "@/directives/icon-secondary";
 export default {
   name: "Home",
   components: { AppAudioItem },
+  directives: {
+    "icon-secondry": IconSecondary,
+  },
   data() {
     return {
       audios: [],

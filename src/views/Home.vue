@@ -35,7 +35,7 @@
         >
           <span class="card-title">Audios</span>
           <!-- Icon -->
-          <!-- I'm using a directive to show this icon-->
+          <!-- I'm using a locale directive to show this icon-->
         </div>
         <!-- Playlist -->
         <ol id="playlist">

@@ -1,7 +1,7 @@
 export default {
   beforeMount(el, binding) {
     //It's registred as a global directive
-    let iconClass = `fa fa-${binding.value} text-xl`;
+    let iconClass = `fa fa-${binding.value}`;
 
     // You can use :argName which is "full"  in this case as an argument to override the whole class
     if (binding.arg == "full") {
@@ -14,9 +14,12 @@ export default {
     }
 
     // You can use .modifierName which is "yellow" in this case as a modifier to change className
-    iconClass += binding.modifiers.yellow
-      ? " text-yellow-400"
-      : " text-green-400 ";
+    iconClass += binding.modifiers.green
+      ? " text-green-400"
+      : " text-grey-400 ";
+
+    // You can use .modifierName which is "xxl" in this case as a modifier to change className
+    iconClass += binding.modifiers.xxl ? " text-2xl " : " text-xl ";
 
     el.innerHTML += `<i class="${iconClass}"></i>`;
   },

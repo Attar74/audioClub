@@ -26,9 +26,12 @@
           <div class="flex justify-between items-center pb-4">
             <p class="text-2xl font-bold">Your Account</p>
             <!-- Modal Close Button -->
-            <div class="modal-close cursor-pointer z-50">
-              <i @click="closeAuthModel" class="fas fa-times"></i>
-            </div>
+            <!-- I'm using a global directive to show this icon-->
+            <div
+              @click="closeAuthModel"
+              class="modal-close cursor-pointer z-50"
+              v-icon="'times'"
+            />
           </div>
 
           <!-- Tabs -->

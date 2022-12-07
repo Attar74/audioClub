@@ -18,8 +18,9 @@
         :to="{ name: 'audio', params: { id: audio.docId }, hash: '#comments' }"
         v-slot="{ navigate }"
       >
-        <span class="comments" @click="navigate">
-          <i class="fa fa-comments text-gray-600 hover:text-green-400"></i>
+        <!-- I'm using a global directive to show this icon-->
+        <span v-icon="'comments'" />
+        <span class="comments ml-2" @click="navigate">
           {{ audio.comment_count }}
         </span>
       </router-link>

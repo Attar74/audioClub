@@ -25,12 +25,12 @@
         class="w-full h-2 rounded bg-gray-200 relative cursor-pointer"
       >
         <!-- Player Ball -->
+        <!-- I'm using a global directive to show this icon-->
         <span
           class="absolute -top-2.5 -ml-2.5 text-gray-800 text-lg"
           :style="{ left: playerProgress }"
-        >
-          <i class="fas fa-circle"></i>
-        </span>
+          v-icon="'circle'"
+        />
         <!-- Player Progress Bar-->
         <span
           class="block h-2 rounded bg-gradient-to-r from-green-500 to-green-400"

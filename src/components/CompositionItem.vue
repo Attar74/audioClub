@@ -31,7 +31,9 @@
         :initial-values="audio"
       >
         <div class="mb-3">
-          <label class="inline-block mb-2">Audio Title</label>
+          <label class="inline-block mb-2">{{
+            $t("CompositionItem.audioTitle")
+          }}</label>
           <vee-field
             name="modified_name"
             type="text"
@@ -57,7 +59,7 @@
           class="ml-1 py-1.5 px-3 rounded text-white bg-green-600"
           :disabled="in_submission"
         >
-          Submit
+          {{ $t("CompositionItem.submit") }}
         </button>
         <button
           type="button"
@@ -65,7 +67,7 @@
           :disabled="in_submission"
           @click.prevent="showForm = !showForm"
         >
-          Go Back
+          {{ $t("CompositionItem.goBack") }}
         </button>
       </vee-form>
     </div>

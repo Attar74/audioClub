@@ -6,7 +6,7 @@
       <span class="song-title font-bold">{{
         current_audio.modified_name
       }}</span>
-      by
+      {{ $t("player.by") }}
       <span class="song-artist">{{ current_audio.display_name }}</span>
     </div>
     <div class="flex flex-nowrap gap-4 items-center">

@@ -1,0 +1,39 @@
+{
+  "header": {
+    "music": "Music",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "manage": "Manage"
+  },
+  "home": {
+    "listen": "Listen to Great Music!",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phaselluset dolor mollis, congue augue non, venenatis elit. Nunc justo eros, suscipit ac aliquet imperdiet, venenatis et sapien. Duis sed magna pulvinar, fringilla lorem eget, ullamcorper urna."
+  },
+  "audio": {
+    "comment_count": "No Comments | comment (1) | comments ({count}) ",
+    "addComment": "Add Comment",
+    "latest": "Latest",
+    "oldest": "Oldest"
+  },
+  "register": {
+    "tos": "Terms of service",
+    "accept": "I accept audio's {0}"
+  },
+  "manage": {
+    "audio": "My Audios"
+  },
+  "upload": {
+    "text": "Upload",
+    "dropFiles": "Drop your files here"
+  },
+  "CompositionItem": {
+    "audioTitle": "Audio Title",
+    "submit": "submit",
+    "goBack": "go back",
+    "audioPlaceholder": "Enter Audio Title"
+  },
+  "player": {
+    "by": "by"
+  }
+}

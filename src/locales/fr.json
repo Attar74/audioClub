@@ -1,0 +1,38 @@
+{
+  "header": {
+    "music": "Musique",
+    "login": "connexion",
+    "logout": "Se déconnecter",
+    "register": "S'inscrire",
+    "manage": "gérer"
+  },
+  "home": {
+    "listen": "Écoutez de la bonne musique!",
+    "description": "Le client est très important, le client sera suivi par le client. Le bateau et la douleur est douce, les devoirs ne font pas de publicité, c'est toxique. Maintenant c'est juste eros, Il reçoit et taxe l'investissement, le poison et la sagesse. Deux, mais super pulvinar, fringilla lorem eget, urne ullamcorper."
+  },
+  "audio": {
+    "comment_count": "Aucun commentaire | commentaire (1) | commentaires ({count}) ",
+    "addComment": "Ajouter un commentaire",
+    "latest": "Dernière",
+    "oldest": "le plus ancien"
+  },
+  "register": {
+    "tos": "سياسات الخدمه",
+    "accept": "أنا أقبل {0}"
+  },
+  "manage": {
+    "audio": "Mes Audios"
+  },
+  "upload": {
+    "text": "Télécharger",
+    "dropFiles": "Déposez vos fichiers ici"
+  },
+  "CompositionItem": {
+    "audioTitle": "Titre audio",
+    "submit": "soumettre",
+    "goBack": "retourner"
+  },
+  "player": {
+    "by": "par"
+  }
+}

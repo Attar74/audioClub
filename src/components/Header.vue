@@ -8,7 +8,7 @@
         :to="{ name: 'home' }"
         exact-active-class="no-active"
       >
-        Music
+        {{ $t("header.music") }}
       </router-link>
 
       <div class="flex flex-grow items-center">
@@ -21,22 +21,36 @@
             </router-link>
           </li> -->
           <li v-if="!userStore.userLoggedIn">
-            <a class="px-2 text-white" href="#" @click.prevent="toggleAuthModel"
-              >Login / Register</a
+            <a
+              class="px-2 text-white"
+              href="#"
+              @click.prevent="toggleAuthModel"
+            >
+              {{ $t("header.login") }} / {{ $t("header.register") }}</a
             >
           </li>
           <template v-else>
             <li>
               <router-link class="px-2 text-white" :to="{ name: 'manage' }">
-                Manage
+                {{ $t("header.manage") }}
               </router-link>
             </li>
             <li>
-              <a class="px-2 text-white" href="#" @click.prevent="signout"
-                >Logout</a
-              >
+              <a class="px-2 text-white" href="#" @click.prevent="signout">{{
+                $t("header.logout")
+              }}</a>
             </li>
           </template>
+        </ul>
+        <ul class="flex flex-row mt-1 ml-auto">
+          <li>
+            <a class="px-2 text-white" href="#" @click.prevent="changeLocale">
+              Switch to {{ CurrentLocale }}
+            </a>
+            <!-- <button>
+              <flag iso="us" />
+            </button> -->
+          </li>
         </ul>
       </div>
     </nav>
@@ -60,9 +74,15 @@ export default {
         this.$router.push({ name: "home" });
       }
     },
+    changeLocale() {
+      this.$i18n.locale = this.$i18n.locale === "fr" ? "en" : "fr";
+    },
   },
   computed: {
     ...mapStores(useModalStore, useUserStore),
+    CurrentLocale() {
+      return this.$i18n.locale === "fr" ? "English" : "French";
+    },
   },
 };
 </script>

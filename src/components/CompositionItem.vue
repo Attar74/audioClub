@@ -3,20 +3,19 @@
   <div class="border border-gray-200 p-3 mb-4 rounded">
     <div v-show="!showForm">
       <h4 class="inline-block text-2xl font-bold">{{ audio.modified_name }}</h4>
+      <!-- I'm using a global directive to show this icon-->
       <button
         class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right"
         @click.prevent="deleteAudio"
         :disabled="in_submission"
-      >
-        <i class="fa fa-times"></i>
-      </button>
+        v-icon="'times'"
+      />
       <button
         class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right"
         @click.prevent="showForm = !showForm"
         :disabled="in_submission"
-      >
-        <i class="fa fa-pencil-alt"></i>
-      </button>
+        v-icon="'pencil-alt'"
+      />
     </div>
     <div v-show="showForm">
       <div
@@ -32,7 +31,9 @@
         :initial-values="audio"
       >
         <div class="mb-3">
-          <label class="inline-block mb-2">Audio Title</label>
+          <label class="inline-block mb-2">{{
+            $t("CompositionItem.audioTitle")
+          }}</label>
           <vee-field
             name="modified_name"
             type="text"
@@ -58,7 +59,7 @@
           class="ml-1 py-1.5 px-3 rounded text-white bg-green-600"
           :disabled="in_submission"
         >
-          Submit
+          {{ $t("CompositionItem.submit") }}
         </button>
         <button
           type="button"
@@ -66,7 +67,7 @@
           :disabled="in_submission"
           @click.prevent="showForm = !showForm"
         >
-          Go Back
+          {{ $t("CompositionItem.goBack") }}
         </button>
       </vee-form>
     </div>

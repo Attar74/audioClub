@@ -19,11 +19,12 @@
           ></i>
         </button>
         <div class="z-50 text-left ml-8">
-          <!-- Song Info -->
+          <!-- Audio Info -->
           <div class="text-3xl font-bold">
             {{ audio.modified_name || `...` }}
           </div>
           <div>{{ audio.genrre }}</div>
+          <!-- <div class="audio-price">{{ $n(1, "currency", "egp") }}</div> -->
         </div>
       </div>
     </section>
@@ -34,10 +35,12 @@
       >
         <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
           <!-- Comment Count -->
-          <span class="card-title"
-            >Comments ({{ audio.comment_count ?? `...` }})</span
-          >
-          <i class="fa fa-comments float-right text-green-400 text-2xl"></i>
+          <span>{{
+            $tc("audio.comment_count", audio.comment_count, {
+              count: audio.comment_count,
+            })
+          }}</span>
+          <span class="card-title" v-icon.right.green.xxl="'comments'" />
         </div>
         <div class="p-6">
           <div
@@ -64,7 +67,7 @@
               type="submit"
               class="mt-1.5 py-1.5 px-3 rounded text-white bg-green-600 block"
             >
-              Add Comment
+              {{ $t("audio.addComment") }}
             </button>
           </vee-form>
           <!-- Sort Comments -->
@@ -73,8 +76,8 @@
             v-model="sort"
             class="block mt-4 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
           >
-            <option value="1">Latest</option>
-            <option value="2">Oldest</option>
+            <option value="1">{{ $t("audio.latest") }}</option>
+            <option value="2">{{ $t("audio.oldest") }}</option>
           </select>
           <!--No Comments-->
           <div v-else class="d-flex text-center">

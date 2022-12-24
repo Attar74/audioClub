@@ -20,6 +20,11 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
+// Kepp copy of the DB in the user browser
+db.enablePersistence().catch((error) => {
+  console.log(`Firebase persistence error ${error.code}`);
+});
+
 const usersCollection = db.collection("users");
 const audiosCollection = db.collection("audios");
 const commentsCollection = db.collection("comments");

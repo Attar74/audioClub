@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/fireStore";
+import "firebase/firestore";
 import "firebase/storage";
 
 // Your web app's Firebase configuration
@@ -19,6 +19,11 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
+
+// Kepp copy of the DB in the user browser
+db.enablePersistence().catch((error) => {
+  console.log(`Firebase persistence error ${error.code}`);
+});
 
 const usersCollection = db.collection("users");
 const audiosCollection = db.collection("audios");

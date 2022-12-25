@@ -70,6 +70,16 @@ export default {
       files.forEach((file) => {
         if (file.type !== "audio/mpeg") {
           return;
+        } else if (!navigator.onLine) {
+          this.uploads.push({
+            task: {},
+            currentProgress: 100,
+            name: file.name,
+            variant: "bg-red-400",
+            icon: "fas fa-times",
+            text_class: "text-red-400",
+          });
+          return;
         } else {
           const storageRef = storage.ref(); // audioclub-74c06.appspot.com
           const songsRef = storageRef.child(`audios/${file.name}`); // audioclub-74c06.appspot.com/audios/ex.mp3

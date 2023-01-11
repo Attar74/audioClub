@@ -1,5 +1,6 @@
 <template>
   <p>About</p>
+  <base-button />
 </template>
 
 <script>

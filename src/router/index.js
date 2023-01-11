@@ -1,9 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "@/views/Home.vue";
-import About from "@/views/About.vue";
-import Manage from "@/views/Manage.vue";
 // import useUserStore from "@/stores/user";
-import Audio from "@/views/Audio.vue";
+
+
+// next approach is acvieving lazy loading approach by importing the component only when need it
+const Home   = () => import("@/views/Home.vue")
+const About  = () => import ("@/views/About.vue");
+const Manage = () => import ("@/views/Manage.vue");
+const Audio  = () => import ("@/views/Audio.vue");
 
 const routes = [
   {

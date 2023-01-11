@@ -202,17 +202,20 @@ export default {
 
       resetForm();
     },
-    async getAudioData() {
-      const docSnapshot = await audiosCollection.doc(this.audioId).get();
-      if (!docSnapshot.exists) {
-        this.$router.push({ name: "home" });
-        return;
-      }
-      const { sort } = this.$route.query;
-      this.sort = sort || "1";
-      this.audio = docSnapshot.data();
-      await this.getComments();
-    },
+    // async getAudioData() {
+    //   const docSnapshot = await audiosCollection.doc(to.params.is).get();
+
+    //   next(async (vm) => {
+    //     if (!docSnapshot.exists) {
+    //       this.$router.push({ name: "home" });
+    //       return;
+    //     }
+    //     const { sort } = vm.$route.query;
+    //     vm.sort = sort || "1";
+    //     vm.audio = docSnapshot.data();
+    //     await vm.getComments();
+    //   });      
+    // },
     async getComments() {
       const snapshots = await commentsCollection
         .where("aid", "==", this.audioId)
@@ -226,8 +229,21 @@ export default {
       });
     },
   },
-  async created() {
-    this.getAudioData();
+
+  //using next approach for slow speed internet we r catching the component first vefor loading other stuff inside the page like comments
+  async beforeRouteEnter(to, from, next) {
+    const docSnapshot = await audiosCollection.doc(to.params.id).get();
+
+    next(async (vm) => {
+      if (!docSnapshot.exists) {
+        this.$router.push({ name: "home" });
+        return;
+      }
+      const { sort } = vm.$route.query;
+      vm.sort = sort || "1";
+      vm.audio = docSnapshot.data();
+      await vm.getComments();
+    }); 
   },
 };
 </script>

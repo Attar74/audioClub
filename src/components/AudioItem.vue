@@ -4,7 +4,7 @@
     >
       <div>
         <router-link :to="{ name: 'audio', params: { id: audio.docId } }"
-          class="font-bold block text-gray-600"
+          class="font-bold block text-gray-600 composition-name"
         >
           {{ audio.modified_name }}
         </router-link>

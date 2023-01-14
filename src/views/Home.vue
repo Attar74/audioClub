@@ -50,7 +50,7 @@
 
 <script>
 import { audiosCollection } from "@/includes/firebase";
-import AppAudioItem from "../components/audioItem.vue";
+import AppAudioItem from "../components/AudioItem.vue";
 import IconSecondary from "@/directives/icon-secondary";
 export default {
   name: "Home",
